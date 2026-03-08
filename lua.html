@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Kota | Luau Developer</title>
+
+<style>
+
+:root{
+--bg:#0b0b0b;
+--text:white;
+--card:#111;
+--accent:#a855f7;
+--sub:#aaa;
+}
+
+.light{
+--bg:#f5f5f5;
+--text:#111;
+--card:#ffffff;
+--sub:#555;
+}
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+transition:0.4s;
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 10%;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:24px;
+font-weight:600;
+}
+
+.logo img{
+width:40px;
+height:40px;
+border-radius:50%;
+}
+
+nav a{
+margin-left:25px;
+text-decoration:none;
+color:var(--sub);
+transition:0.3s;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+.toggleMode{
+position:fixed;
+top:20px;
+right:20px;
+background:var(--accent);
+border:none;
+padding:10px 14px;
+border-radius:20px;
+cursor:pointer;
+color:white;
+}
+
+.hero{
+text-align:center;
+padding:120px 20px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.hero span{
+color:var(--accent);
+}
+
+.hero p{
+max-width:600px;
+margin:auto;
+margin-top:20px;
+color:var(--sub);
+font-size:18px;
+line-height:1.6;
+}
+
+.section{
+padding:80px 10%;
+text-align:center;
+}
+
+.videos{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:25px;
+}
+
+.card{
+background:var(--card);
+padding:30px;
+border-radius:15px;
+width:260px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 20px rgba(168,85,247,0.6);
+}
+
+#videoArea{
+margin-top:40px;
+display:flex;
+justify-content:center;
+max-height:0;
+opacity:0;
+overflow:hidden;
+transition:all 0.6s ease;
+}
+
+#videoArea.show{
+max-height:500px;
+opacity:1;
+}
+
+iframe{
+width:800px;
+height:450px;
+border:none;
+border-radius:15px;
+}
+
+footer{
+margin-top:100px;
+padding:80px;
+text-align:center;
+position:relative;
+}
+
+.glow{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:200px;
+background:radial-gradient(circle,var(--accent),transparent 70%);
+opacity:0.4;
+filter:blur(120px);
+}
+
+#wave{
+width:100%;
+height:120px;
+}
+
+.contact a{
+color:var(--accent);
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="toggleMode" onclick="toggleMode()">☀ / 🌙</button>
+
+<header>
+
+<div class="logo">
+<img src="https://i.pinimg.com/736x/ca/a7/8c/caa78c03a81eef112fca5354d418d0b8.jpg">
+Kota
+</div>
+
+<nav>
+<a href="#">Inicio</a>
+<a href="#videos">Vídeos</a>
+<a href="#contato">Contato</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Kota <span>Luau Developer</span></h1>
+
+<p>
+Programador em <span>Luau</span> intermediário em busca de trabalhos.  
+Confira alguns dos meus vídeos abaixo.  
+Se se interessar, mande DM!
+</p>
+
+</section>
+
+<section class="section" id="videos">
+
+<h2>Vídeos</h2>
+
+<div class="videos">
+
+<div class="card" onclick="toggleVideo()">
+<h3>Flight System</h3>
+<p>Sistema de Voo Realista</p>
+</div>
+
+</div>
+
+<div id="videoArea">
+
+<iframe
+src="https://drive.google.com/file/d/18cc8VP0y0qNT85gQmEBg1ykZ92_O5Chu/preview">
+</iframe>
+
+</div>
+
+</section>
+
+<section class="section contact" id="contato">
+
+<h2>Contato</h2>
+
+<p>
+Discord: <span style="color:#a855f7;">kotaroberk</span>
+</p>
+
+<p>
+Server:<br>
+<a href="https://discord.gg/h9uMyeFM" target="_blank">
+https://discord.gg/h9uMyeFM
+</a>
+</p>
+
+</section>
+
+<canvas id="wave"></canvas>
+
+<footer>
+<div class="glow"></div>
+</footer>
+
+<script>
+
+/* VIDEO */
+
+function toggleVideo(){
+let video=document.getElementById("videoArea")
+video.classList.toggle("show")
+}
+
+/* DARK / LIGHT MODE */
+
+function toggleMode(){
+document.body.classList.toggle("light")
+}
+
+/* WAVES */
+
+let canvas=document.getElementById("wave")
+let ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=120
+
+let t=0
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.beginPath()
+
+for(let x=0;x<canvas.width;x++){
+
+let y=60+Math.sin((x+t)*0.02)*15
+ctx.lineTo(x,y)
+
+}
+
+ctx.strokeStyle="#a855f7"
+ctx.lineWidth=2
+ctx.stroke()
+
+t+=2
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
+
+</body>
+</html>
